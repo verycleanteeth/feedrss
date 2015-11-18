@@ -1,8 +1,8 @@
 <?PHP
 //submit a link for processing
 if ($_POST['submit'] AND $_POST['link']){
-
 	
+
 	//extract info from link
 	$content = file_get_contents($_POST['link']);
 	
@@ -43,9 +43,11 @@ if ($_POST['submit'] AND $_POST['link']){
     		'.print_r($content, true).'
     	</p>';
     }
+    
+    
 }
 
-$code = $db->encode($user_id, 'dasfa089jva');
+$code = $_SESSION['rss_key'];
 ?>
 
 <form method="post">

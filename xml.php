@@ -13,9 +13,11 @@ require_once('classes/db.class.php');
 
 $db = new DB();
 
-//get user ID from obfuscated url
-$id = $_GET['id'];
-$id = $db->decode($id, 'dasfa089jva');
+//get user ID from rss_key
+$stmt = $db->connection->prepare("SELECT user_id FROM users WHERE rss_key = ?");
+$stmt->execute(array($_GET['id']));
+$rows = $stmt->fetch(PDO::FETCH_ASSOC);
+$id = $rows['user_id'];
 
 
 ?>

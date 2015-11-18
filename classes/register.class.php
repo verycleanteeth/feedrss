@@ -1,28 +1,23 @@
 <?php
+//handles user registration
+class Register{
 
-/**
- * Class registration
- * handles the user registration
- */
-class Register
-{
-    /**
-     * @var object $db_connection The database connection
-     */
     private $db_connection = null;
-    /**
-     * @var array $errors Collection of error messages
-     */
-    public $errors = array();
-    /**
-     * @var array $messages Collection of success / neutral messages
-     */
-    public $messages = array();
+    public $errors = array(); //collection of error messages
+    public $messages = array(); //collection of success/neutral messages
 
-    /**
-     * the function "__construct()" automatically starts whenever an object of this class is created,
-     * you know, when you do "$registration = new Registration();"
-     */
+	//generates a random rss_key. Uses microtime to avoid collisions with existing keys.
+	private function generateRandomString($length = 30) {
+	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	    $charactersLength = strlen($characters);
+	    $randomString = '';
+	    for ($i = 0; $i < $length; $i++) {
+	        $randomString .= $characters[rand(0, $charactersLength - 1)];
+	    }
+	    return $randomString;
+	}
+
+    //fire upon object creation
     public function __construct($db_connection){
     
     	$this->db_connection = $db_connection;
@@ -32,10 +27,8 @@ class Register
         }
     }
 
-    /**
-     * handles the entire registration process. checks all error possibilities
-     * and creates a new user in the database if everything is fine
-     */
+    //handles the entire registration process. checks all error possibilities
+    //and creates a new user with rss key in the database if everything is fine
     private function registerNewUser()
     {
         if (empty($_POST['user_name'])) {
@@ -79,21 +72,26 @@ class Register
             // PHP 5.3/5.4, by the password hashing compatibility library
             $user_password_hash = password_hash($user_password, PASSWORD_DEFAULT);
 
+			//get new rss key
+			$rss_key = $this->generateRandomString();
+			
             // check if user or email address already exists
-            $sql = "SELECT * FROM users WHERE user_name = ? OR user_email = ?";      
+            $sql = "SELECT * FROM users WHERE user_name = ? OR user_email = ? OR rss_key = ?";      
             $stmt = $this->db_connection->prepare($sql);
-			$stmt->execute(array($user_name, $user_email));
+			$stmt->execute(array($user_name, $user_email, $rss_key));
 			$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+			
+			
 			
             if (count($rows) >= 1) {
                 $this->errors[] = "Sorry, that username / email address is already taken.";
             } else {
                 // write new user's data into database
-                $sql = "INSERT INTO users (user_name, user_password_hash, user_email)
-                        VALUES(?, ?, ?);";
+                $sql = "INSERT INTO users (user_name, user_password_hash, user_email, rss_key)
+                        VALUES(?, ?, ?, ?);";
                 $stmt = $this->db_connection->prepare($sql);
-				$stmt->execute(array($user_name, $user_password_hash, $user_email));
+				$stmt->execute(array($user_name, $user_password_hash, $user_email, $rss_key));
                 $rows = $stmt->rowCount();
 
                 // if user has been added successfully

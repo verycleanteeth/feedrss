@@ -1,5 +1,5 @@
 <?PHP
-//error_reporting(E_ALL & ~E_NOTICE);
+error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 
@@ -55,8 +55,6 @@ $login = new Login($db->connection);
 	<div class="jumbotron">
 <?PHP
 
-	
-	
 	if ($login->isUserLoggedIn() == true) {
 		include('add.php');
 	}

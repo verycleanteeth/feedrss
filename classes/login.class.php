@@ -35,7 +35,7 @@ class Login{
             $user_name = $_POST['user_name'];
 
             // get info for selected user (allows login via email address in the username field)
-            $sql = "SELECT user_id, user_name, user_email, user_password_hash
+            $sql = "SELECT user_id, user_name, user_email, user_password_hash, rss_key
                     FROM users
                     WHERE user_name = ? OR user_email = ?";
             $stmt = $this->db_connection->prepare($sql);
@@ -52,6 +52,7 @@ class Login{
                     $_SESSION['user_id'] = $row->user_id;
                     $_SESSION['user_name'] = $row->user_name;
                     $_SESSION['user_email'] = $row->user_email;
+                    $_SESSION['rss_key'] = $row->rss_key;
                     $_SESSION['user_login_status'] = 1;
 
                 } 
