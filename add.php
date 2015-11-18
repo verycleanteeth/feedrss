@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<head>
-	<title>Feed RSS</title>
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-	<link rel="icon" href="/favicon.ico" type="image/x-icon">
-</head>
-<body>
-
 <?PHP
-require('config.php');	
-
-$db = new DB;
-
 //submit a link for processing
 if ($_POST['submit'] AND $_POST['link']){
 
@@ -51,7 +39,7 @@ if ($_POST['submit'] AND $_POST['link']){
     else{
     	echo '
     	<p class="error">
-    		Could not get retrieve link. <br><br>
+    		Could not retrieve link. <br><br>
     		'.print_r($content, true).'
     	</p>';
     }
@@ -67,5 +55,3 @@ $code = $db->encode($user_id, 'dasfa089jva');
 <?PHP
 	echo "<p>Your XML File: <div class=\"xmllink\">http://egobomb.com/rss/xml/$code</div></p>";
 ?>
-</body>
-</html>
