@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+	<rss version="2.0">
+	<channel>
+	<title>Dan's Personal RSS Feed</title>
+	<description>Cool news for cool dudes</description>
+	<link>http://www.egobomb.com/rss.xml</link>
+		
+		<item>
+			<title>PHP: Hypertext Preprocessor</title>
+			<description></description>
+			<link>http://php.net/</link>
+	    </item>
+    
+		<item>
+			<title>My tips on how to plan a game, stay motivated and get it finished. : gamedev</title>
+			<description></description>
+			<link>http://www.reddit.com/r/gamedev/comments/2d89kj/my_tips_on_how_to_plan_a_game_stay_motivated_and/?utm_source=gamedevjsweekly&amp;utm_medium=email</link>
+	    </item>		
+		
+	</channel>
+	</rss>

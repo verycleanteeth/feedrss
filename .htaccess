@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^xml/([^/.]+)/?$ xml.php?id=$1 [L]
